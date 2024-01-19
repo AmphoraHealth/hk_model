@@ -6,7 +6,8 @@ python_version="3.9"
 # validate enviroment
 if [ -d "$env_name" ]; 
 then
-    rm -rf "$env_name"
+    echo -e "\033[34m>>> enviroment is already created\033[0m"
+    exit
 fi
 
 # validate python version
@@ -16,7 +17,7 @@ then
 else 
     echo -e "\033[31mERROR >>> Python3 is required to continue\033[0m"
     echo -e "\033[33mWARNING >>> INSTALL python 3.9 (recommended) and run again run_enviroment.sh\033[0m"
-    exit 1
+    exit
 fi
 
 # create venv
@@ -24,13 +25,13 @@ virtualenv $env_name --python=$python_version
 if [ ! -d "$env_name"];
 then
     echo -e "\033[31mERROR >>> $env_name not created\033[0m"
-    exit1
+    exit
 fi
 
 # install requirements.txt
 source $env_name/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r ./config/requirements.txt
 errors=$?
 deactivate
 
