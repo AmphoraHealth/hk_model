@@ -7,11 +7,12 @@ hk_model is a project that contains a pipeline to run a Machine Learning trained
   <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"/>
 </p>
 
-![Pipeline]()
-
 Click on the image below to watch the demo video:
-
-[![Demo Video](docs/pipeline.png)]([https://www.youtube.com/watch?v=[Video-ID]](https://youtu.be/Ycl_yTK0Dig))
+<div align="left">
+      <a href="[https://youtu.be/Ycl_yTK0Dig](https://youtu.be/Ycl_yTK0Dig)">
+         <img src="docs/hk_model_joaquin.png" style="width:60%;">
+      </a>
+</div>
 
 ## 1. Description
 The Amphora Health **hk_model** pipeline takes a trained biomedical machine learning model and evaluates it agains new patient datasets. You can find a list of pre-trained models in our models folder.
