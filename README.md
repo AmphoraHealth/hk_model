@@ -1,25 +1,30 @@
-# hk_model
-hk_model is a project that contains a pipeline to run a Machine Learning trained model.
+# hk_model: Streamlined Machine Learning Deployment
 
-<p align="left">
-  <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>  
-  <img src="https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"/>
+The `hk_model` project offers a pipeline for efficiently deploying and running trained machine learning models. Designed to streamline the process from model training to deployment, this tool is a vital asset for data scientists and ML engineers.
+
+<p align="center">
+  ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+  ![scikit_learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+  ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+  ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 </p>
+
+![Pipeline Image](docs/pipeline.png)
 
 Click on the image below to watch the demo video:
 
-<iframe width="500" height="300" src="https://www.youtube.com/embed/Ycl_yTK0Dig>" frameborder="0" allowfullscreen></iframe>
+[![Demo Video](https://img.youtube.com/vi/Ycl_yTK0Dig/0.jpg)](https://www.youtube.com/watch?v=Ycl_yTK0Dig)
 
 
 
 ## 1. Description
-The Amphora Health **hk_model** pipeline takes a trained biomedical machine learning model and evaluates it agains new patient datasets. You can find a list of pre-trained models in our models folder.
+**Amphora Health's hk_model**: A Biomedical ML Pipeline. Our `hk_model` effortlessly evaluates trained biomedical machine learning models against new patient datasets. Discover a curated collection of pre-trained models in our `models` folder, ready for diverse medical data analysis applications.
 
+## 2. Installation
 
-## 2. Instalation
+### Folder Structure
+Organized and intuitive, the `hk_model` project structure is as follows:
 
-### Folder structure
 
     .
     ├── docs/
@@ -30,12 +35,12 @@ The Amphora Health **hk_model** pipeline takes a trained biomedical machine lear
     ├── main.sh
     ├── requirements.txt
     └── README.md
+    
+    
+This structure ensures a seamless navigation and operation of the pipeline.
 
-
-
-### Prerrequisites
-
-For a full list of requirements and prerrequisites please see the `requirements.txt` file
+### Prerequisites
+To set up `hk_model`, ensure all prerequisites are met. Refer to our `requirements.txt` for a comprehensive list of necessary dependencies. This file provides all you need to prepare your environment for using `hk_model`.
 
 
 ## 3. Usage
@@ -45,10 +50,13 @@ To run this **hk_model** Pipeline, you will need to be in the top level folder a
 make run_model FILE=fileNameIn MODEL=modelName
 ```
 
-|Parameter |Arguments|Description|
-|-----------------------|-------------|-------------|
-| FILE | fileNameIn | The input file name in the data/raw/ subfolder that contains the new instances to be predicted |
-| MODEL  | modelName | The trained model to be used in the predictions that are available in src/models/ 
+#### Parameters Explained
+Understand each parameter for a successful execution:
+
+| Parameter | Argument         | Description |
+|-----------|------------------|-------------|
+| `FILE`    | `<input_file_name>` | Name of the input file located in `data/raw/`. This file should contain new instances for prediction. |
+| `MODEL`   | `<model_name>`   | Name of the pre-trained model for predictions, found in `src/models/`. |
 
 ### Examples
 
@@ -57,31 +65,33 @@ To run the pipeline with one sample file:
 make run_model FILE=hk_sample.csv MODEL=gaussian_e112.pkl
 ```
 
-
 ## 4. Citation
-For citation and more information refer to:
+For academic referencing, please cite our work as follows:
 
-> Tripp et al (2023). DiabetIA: Building Machine Learning Models for Type 2 Diabetes Complications. MedRXiv https://doi.org/10.1101/2023.10.22.23297277
-
-
-## Developers
-This repository was developed and maintained by Amphora Health's scientists and engineers:
-
-* Joaquin Tripp (joaquintripp at amphora.health)
-* Daniel Santana (daniel at amphora.health)
-* Arturo Lopez-Pineda, PhD (arturo at amphora.health)
+> Tripp et al. (2023). "DiabetIA: Building Machine Learning Models for Type 2 Diabetes Complications." MedRXiv. [DOI](https://doi.org/10.1101/2023.10.22.23297277).
 
 
-## 5. Development status
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+## 5. Development Status
+
+### Developers
+The `hk_model` repository is a product of Amphora Health's team:
+
+- Joaquin Tripp - *Data Science Manager*  
+  📧 joaquintripp [at] amphora.health
+
+- Daniel Santana - *Data Scientist*  
+  📧 daniel [at] amphora.health
 
 
-### Releases
-- v1.0 Jan 17, 2024     	[stable] 
+### Current Release
+- **Version 1.0**  
+  Released on Jan 17, 2024  
+  Status: 🟢 Stable Release
+
 
  
 
-## License
+## 6. License
 Please refer to our MIT license in this repository.
 
