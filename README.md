@@ -3,10 +3,10 @@
 The `hk_model` project offers a pipeline for efficiently deploying and running trained machine learning models. Designed to streamline the process from model training to deployment, this tool is a vital asset for data scientists and ML engineers.
 
 <p align="center">
-  ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-  ![scikit_learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
-  ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
-  ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![scikit_learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 </p>
 
 ![Pipeline Image](docs/pipeline.png)
