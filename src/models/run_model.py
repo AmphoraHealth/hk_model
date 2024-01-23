@@ -32,6 +32,10 @@ MODEL:str = args.model
 
 if __name__ == '__main__':
     
+    # assertions
+    assert os.path.exists(f'{ROOT_PATH}/data/interim/{INPUT}'), logging.error(f'Input file not exists')
+    assert os.path.exists(f'{ROOT_PATH}/src/models/{PROJECT}/{MODEL}'), logging.error(f'Model not exists')
+    
     # read file
     data = pd.read_csv(f'{ROOT_PATH}/data/interim/{INPUT}', low_memory=False)
 
@@ -53,14 +57,15 @@ if __name__ == '__main__':
                     .rename(columns={'index':'Diagnostic',MODEL:'Cases'})
                     .replace(to_replace={'Diagnostic':{0.0:'Negative',1.0:'Positive'}})
             )
-            data.to_csv(f'{ROOT_PATH}/data/processed/{PROJECT}/{OUTPUT.replace(".csv",f"_{MODEL}.csv")}')
+            data.loc[:,['id',MODEL]].to_csv(f'{ROOT_PATH}/data/processed/{PROJECT}/{OUTPUT.replace(".csv",f"_{MODEL}.csv")}',index=False)
             logging.info('Prediction done')
             logging.info(f'File saved in: {ROOT_PATH}/data/processed/')
             logging.info(f'Total:\n{"-"*72}\n{results}\n{"-"*72}')
 
 
         except Exception as e:
-            raise logging.error(f'Error during predction: {e}')
+            logging.error(f'Error during predction: {e}')
+            sys.exit()
     else:
         missing_features:list[str] = [
             feature[0] for feature in zip (
