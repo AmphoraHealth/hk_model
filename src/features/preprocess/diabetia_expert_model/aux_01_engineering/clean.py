@@ -30,12 +30,16 @@ class CleanFunctions:
         1. Clean categorical with non ordinal labels
         2. Clean categorical with ordinal labels
         """
+        
         try:
             #..Get categorical cols from json config and encoder from sklearn
             categoricalCols:list[str] = self.config['config']['categorical_cols']
             
             ######################### Categorical non ordinal
             for col,replaces in categoricalCols.items():
+
+                # assertion for categories
+                assert all([key in replaces.keys() for key in self.data[col].unique()]), logging.info(f"Categories in {col} must be {list(replaces.keys())}")
                 self.data.loc[:,col] = self.data.loc[:,col].replace(to_replace=replaces)
 
             ######################### Categorical ordinal
@@ -70,7 +74,7 @@ class CleanFunctions:
             #..Loop all columns in config
             for column in ordinalCols:
                 self.data[column] = \
-                    pd.to_datetime(self.data[column], errors='coerce')\
+                    pd.to_datetime(self.data[column], errors='coerce', format='%d/%m/%Y', dayfirst=True)\
                     .apply(lambda x: x.toordinal() if pd.isnull(x) == False else x)
                 
             return logging.info('Ordinal cols transformed')

@@ -25,7 +25,7 @@ class CreateFunctions:
         Function to update dx_year_e11 for year since T2D diagnosis
         """
         try:
-            yearsSinceDx = pd.to_datetime(self.data['x_start']).dt.year
+            yearsSinceDx = pd.to_datetime(self.data['x_start'], dayfirst=True, format='%d/%m/%Y').dt.year
             self.data.insert(3,'years_since_dx', yearsSinceDx)
             self.data['years_since_dx'] = self.data.apply(lambda x: x['years_since_dx']-x['dx_year_e11'] if x['dx_year_e11'] > 0  else 0,axis=1)
             self.data.loc[(self.data[self.data['years_since_dx']<0]).index,'years_since_dx'] = 0
@@ -43,7 +43,7 @@ class CreateFunctions:
             aux = self.data[['id','birthdate','dx_year_e11']].sort_values(by=['id','birthdate'], ascending = True)
             aux = aux[aux['dx_year_e11'].isnull()==False]
             aux = aux.drop_duplicates(subset='id', keep = 'first')
-            aux['birthdate'] = pd.to_datetime(aux['birthdate']).dt.year
+            aux['birthdate'] = pd.to_datetime(aux['birthdate'],dayfirst=True,format='%d/%m/%Y').dt.year
             aux['dx_age_e11'] = aux['dx_year_e11'] - aux['birthdate']
             aux_ages:dict = dict(zip(aux['id'],aux['dx_age_e11']))
 
