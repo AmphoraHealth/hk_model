@@ -27,6 +27,8 @@ class ImputeFunctions:
         1. Null values
         """
         targetCols:list[str] = [
+            'dx_age_e11',
+            'dx_age_e11_ordinal',
             'bmi_value',
             'bmi_ordinal',
             'diabetes_mellitus_type_2', 
