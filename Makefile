@@ -10,7 +10,8 @@ run_model: data/interim/$(FILE)
 
 data/interim/$(FILE): venv/bin/activate
 	@echo "\033[1;34mRUNNING FILE PREPROCESS\033[0m"
-	@python3 src/features/preprocess/$(PROJECT)/data_engineering.py -i $(FILE)
+	@bash ./scripts/preprocess.sh $(FILE) $(PROJECT)
+	
 
 venv/bin/activate: $(VENV_CREATED)
 	@echo "\033[1;31mENVIROMENT NOT FOUND\033[0m"
