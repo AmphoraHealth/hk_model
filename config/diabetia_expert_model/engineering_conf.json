@@ -16,7 +16,8 @@
             "in_glucose_median",
             "fn_triglycerides_median",
             "fn_creatinine_median",
-            "fn_cholesterol_median"
+            "fn_cholesterol_median",
+            "fn_hemoglobin_median"
         ],
         "diagnosis":{
             "e112":"type_2_diabetes_mellitus_with_renal_complications",
