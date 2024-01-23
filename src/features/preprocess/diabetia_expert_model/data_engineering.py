@@ -1,16 +1,15 @@
 """ enginering.py
     This file contains the functions for data cleaning and feature enginering.
-    - remove unnecessary columns
-    - one-hot encoding (if needed)
+    - remove rows with all values in NaN
+    - create new categorical cols
+    - clean date cols
 
 Input:
-  - data/hk_database.csv
+  - data/raw/hk_sample.csv
 Output:
-  - data/hk_database_cleaned.csv
-Additional outputs:
-  - None
+  - data/interim/hk_sample.csv
 """
-import argparse
+
 import sys
 import os
 ROOT_PATH:str = os.path.abspath(
@@ -24,23 +23,6 @@ ROOT_PATH:str = os.path.abspath(
 )
 sys.path.append(ROOT_PATH)
 
-parser = argparse.ArgumentParser(description='This script helps to run data engineering process requiered')
-parser.add_argument('--input','-i', required=True, help='Input file name')
-parser.add_argument('--output', '-o', required=False, help='Output file name', default='unknown.csv')
-parser.add_argument('--inpath', '-ipath', required=False, help='Specific input path', default=f'{ROOT_PATH}/data/raw')
-parser.add_argument('--outpath', '-opath', required=False, help='Specific output path', default=f'{ROOT_PATH}/data/interim')
-parser.add_argument('--project', '-p', required=False, help='Name of the project where model is located', default='diabetia_expert_model')
-args = parser.parse_args()
-
-# Constants
-INPUT = args.input
-OUTPUT = args.output if args.output != 'unknown.csv' else args.input
-IN_PATH = f'{args.inpath}/{INPUT}'
-OUT_PATH = f'{args.outpath}/{OUTPUT}'
-PROJECT = args.project
-CONFIG_PATH = f'{ROOT_PATH}/config/{PROJECT}/engineering_conf.json'
-
-
 # Import libraries
 import pandas as pd
 import os
@@ -49,6 +31,7 @@ from aux_01_engineering import CleanFunctions
 from aux_01_engineering import CreateFunctions
 from aux_01_engineering import DeleteFunctions
 from aux_01_engineering import ImputeFunctions
+from aux_01_engineering import ValidateFunctions
 from references.libs.logging import logging
 
 
@@ -56,7 +39,8 @@ class DataEngineering(
     CleanFunctions,
     CreateFunctions,
     DeleteFunctions,
-    ImputeFunctions
+    ImputeFunctions,
+    ValidateFunctions
     ):
     
     def __init__(
@@ -81,10 +65,16 @@ class DataEngineering(
         """
         Function to run all transformations.
         """
+        _features:list[str] = self.config['config']['features']
+        
+        #..Transformations starts
+        self.readFile()
+    
         try:
-          #..Transformations starts
-          self.readFile()
 
+          #..validate functions
+          self.validateCols()
+                        
           #..create functions
           self.createAgeDxGroup()
           self.createAgeWxGroup()
@@ -99,7 +89,6 @@ class DataEngineering(
           self.ordinalCols()
 
           #..delete functions
-          # self.dropCols()
           self.dropRows()
 
           #..impute functions
@@ -108,37 +97,10 @@ class DataEngineering(
           logging.info('Transformations done')
           return self.data
         except Exception as e:
-            raise logging.error(f'Transformations failed. {e}')
+          logging.error(f'Transformations failed. {e}')
+          raise logging.warning(f'Data was not transformed')
+          
             
 
     def __str__(self):
         return 'Data engineering main process. It uses functions from DataEngieneeringFunctions'
-
-
-def runDataEngineering() -> pd.DataFrame:
-    """
-    Function to run all data engineering process
-    """
-    # intialize class
-    try:
-      data_engineering = DataEngineering(
-          IN_PATH=IN_PATH,
-          CONFIG_PATH=CONFIG_PATH
-      )
-
-      # Run transformations
-      data = data_engineering.mainTransform()
-
-      # Save file
-      data.to_csv(f'{OUT_PATH}', index=False, encoding='UTF-8')
-      
-      return logging.info(f'File saved on {OUT_PATH}')
-    
-    except Exception as e:
-        raise logging.error(f'{runDataEngineering.__name__} process failed. {e}')
-
-
-if __name__ == '__main__':
-    logging.info(f'{"="*30}DATA ENGINEERING STARTS')
-    runDataEngineering()
-    logging.info(f'{"="*30}DATA ENGINEERING FINISHED')
