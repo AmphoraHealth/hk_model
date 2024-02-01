@@ -43,7 +43,7 @@ class CreateFunctions:
             aux = self.data[['id','birthdate','dx_year_e11']].sort_values(by=['id','birthdate'], ascending = True)
             aux = aux[aux['dx_year_e11'].isnull()==False]
             aux = aux.drop_duplicates(subset='id', keep = 'first')
-            aux['birthdate'] = pd.to_datetime(aux['birthdate'],dayfirst=True,format='%d/%m/%Y').dt.year
+            aux['birthdate'] = pd.to_datetime(aux['birthdate'],dayfirst=True).dt.year
             aux['dx_age_e11'] = aux['dx_year_e11'] - aux['birthdate']
             aux_ages:dict = dict(zip(aux['id'],aux['dx_age_e11']))
 

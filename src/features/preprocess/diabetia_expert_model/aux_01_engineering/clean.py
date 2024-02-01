@@ -74,7 +74,7 @@ class CleanFunctions:
             #..Loop all columns in config
             for column in ordinalCols:
                 self.data[column] = \
-                    pd.to_datetime(self.data[column], errors='coerce', format='%d/%m/%Y', dayfirst=True)\
+                    pd.to_datetime(self.data[column], errors='coerce', dayfirst=True)\
                     .apply(lambda x: x.toordinal() if pd.isnull(x) == False else x)
                 
             return logging.info('Ordinal cols transformed')
