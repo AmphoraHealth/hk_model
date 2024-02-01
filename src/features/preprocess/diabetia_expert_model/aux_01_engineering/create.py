@@ -25,7 +25,7 @@ class CreateFunctions:
         Function to update dx_year_e11 for year since T2D diagnosis
         """
         try:
-            yearsSinceDx = pd.to_datetime(self.data['x_start'], dayfirst=True, format='%d/%m/%Y').dt.year
+            yearsSinceDx = pd.to_datetime(self.data['x_start'], dayfirst=True).dt.year
             self.data.insert(3,'years_since_dx', yearsSinceDx)
             self.data['years_since_dx'] = self.data.apply(lambda x: x['years_since_dx']-x['dx_year_e11'] if x['dx_year_e11'] > 0  else 0,axis=1)
             self.data.loc[(self.data[self.data['years_since_dx']<0]).index,'years_since_dx'] = 0
