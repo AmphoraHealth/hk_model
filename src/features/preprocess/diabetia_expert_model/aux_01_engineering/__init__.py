@@ -5,4 +5,5 @@ from .impute import ImputeFunctions
 from .validate import ValidateFunctions
 from .aux_functions import snakeCase
 from .aux_functions import calculateGFR
+from .tranform import TransformFunctions
 
