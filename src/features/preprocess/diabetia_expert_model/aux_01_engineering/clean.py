@@ -46,6 +46,9 @@ class CleanFunctions:
             for measure in self.config['categoricalMeasuresConfig'].items():
                 labels:list[str] = measure[1]['labels']
 
+                if measure[0] == 'creatinine':
+                    labels = labels[::-1]
+                    
                 categories:dict = {
                     category:index for index, category in enumerate(labels)
                 }
@@ -80,3 +83,33 @@ class CleanFunctions:
             return logging.info('Ordinal cols transformed')
         except Exception as e:
             raise logging.error(f'{self.ordinalCols.__name__} failed. {e}') 
+        
+    def cleanSex(self):
+        """
+        Function to clean sex columns. This process consider next possible inputs:
+        - F,M
+        - FEMALE, MALE
+        - HOMBRE, MUJER
+        - H,M
+        - 0 = male
+        - 1 = female
+        """
+        try:
+            #..Get classe in sex column
+            sexCases:list[str] = self.config['csSexConfig']['categories']
+
+            #..Strip and lower cases
+            self.data['cs_sex'] = self.data['cs_sex'].apply(lambda x: x.lower().strip())
+
+            #..Loop all columns in config
+            for case in sexCases.values():
+                if all([c in self.data['cs_sex'].unique() for c in case ]):
+                    self.data['cs_sex'] = self.data['cs_sex'].replace(case[0],'male')
+                    self.data['cs_sex'] =self.data['cs_sex'].replace(case[1],'female')
+                else:
+                    continue
+                
+            return logging.info('Ordinal cols transformed')
+        except Exception as e:
+            raise logging.error(f'{self.cleanSex.__name__} failed. {e}') 
+
