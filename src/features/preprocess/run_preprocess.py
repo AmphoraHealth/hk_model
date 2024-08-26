@@ -38,7 +38,6 @@ OUT_PATH = f'{args.outpath}/{OUTPUT}'
 PROJECT = args.project
 CONFIG_PATH = f'{ROOT_PATH}/config/{PROJECT}/engineering_conf.json'
 
-
 # Import libraries
 import pandas as pd
 import os

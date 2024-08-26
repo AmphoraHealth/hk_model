@@ -27,11 +27,13 @@ sys.path.append(ROOT_PATH)
 import pandas as pd
 import os
 import json
+import pickle
 from aux_01_engineering import CleanFunctions
 from aux_01_engineering import CreateFunctions
 from aux_01_engineering import DeleteFunctions
 from aux_01_engineering import ImputeFunctions
 from aux_01_engineering import ValidateFunctions
+from aux_01_engineering import TransformFunctions
 from references.libs.logging import logging
 
 
@@ -40,7 +42,8 @@ class DataEngineering(
     CreateFunctions,
     DeleteFunctions,
     ImputeFunctions,
-    ValidateFunctions
+    ValidateFunctions,
+    TransformFunctions
     ):
     
     def __init__(
@@ -52,6 +55,7 @@ class DataEngineering(
         self.config_path:str = CONFIG_PATH
         self.data:pd.DataFrame = pd.DataFrame()
         self.config:dict = json.load(open(f'{self.config_path}', 'r', encoding='UTF-8'))
+
     
     def readFile(self,rows:int = None):
         try:
@@ -76,6 +80,7 @@ class DataEngineering(
           self.validateCols()
                         
           #..create functions
+          self.cleanSex()
           self.createAgeDxGroup()
           self.createAgeWxGroup()
           self.createYearSinceDx()
@@ -85,6 +90,7 @@ class DataEngineering(
           self.createTriglyceridesCategory()
           self.createGFRCategory()
           self.createCholesterolCategory()
+          self.createCreatinineCategory()
           self.categoricalCols()
           self.ordinalCols()
 
@@ -93,6 +99,10 @@ class DataEngineering(
 
           #..impute functions
           self.imputeNulls()
+
+          #..normalization
+          #self.normalize()
+          #self.standardize()
 
           logging.info('Transformations done')
           return self.data
