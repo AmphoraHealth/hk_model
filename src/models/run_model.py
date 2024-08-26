@@ -49,7 +49,13 @@ if __name__ == '__main__':
     # make prediction
     if all([feature in data.columns for feature in features]):
         try:
+            # Do predictions
             data[MODEL] = model.predict(data[features])
+            probabilites = model.predict_proba(data[features]).round(6)
+            prob_classes = [f'prob_class_{class_label}' for class_label in model.classes_]
+            for n_class in range(len(model.classes_)):
+                data[prob_classes[n_class]] = [p[n_class] for p in probabilites]
+            
             results = (
                 data[MODEL]
                     .value_counts()
@@ -57,7 +63,7 @@ if __name__ == '__main__':
                     .rename(columns={'index':'Diagnostic',MODEL:'Cases'})
                     .replace(to_replace={'Diagnostic':{0.0:'Negative',1.0:'Positive'}})
             )
-            data.loc[:,['id',MODEL]].to_csv(f'{ROOT_PATH}/data/processed/{PROJECT}/{OUTPUT.replace(".csv",f"_{MODEL}.csv")}',index=False)
+            data.loc[:,['id',MODEL]+prob_classes].to_csv(f'{ROOT_PATH}/data/processed/{PROJECT}/{OUTPUT.replace(".csv",f"_{MODEL}.csv")}',index=False)
             logging.info('Prediction done')
             logging.info(f'File saved in: {ROOT_PATH}/data/processed/')
             logging.info(f'Total:\n{"-"*72}\n{results}\n{"-"*72}')
