@@ -43,7 +43,9 @@ class ImputeFunctions:
             'triglycerides_value',
             'triglycerides_ordinal',
             'cholesterol_value',
-            'cholesterol_ordinal'
+            'cholesterol_ordinal',
+            'creatinine_value',
+            'creatinine_ordinal'
         ]
         try:
             # fill with 0 in case of nulls
