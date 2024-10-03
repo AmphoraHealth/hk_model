@@ -24,29 +24,48 @@ Click on the image below to watch the demo video:
 ### Folder Structure
 Organized and intuitive, the `hk_model` project structure is as follows:
 
-
-    .
-    ├── docs/
+    
+    ├── config/
+		└── diabetia_expert_model
+	     		├── requirements.txt
+	      		└── run_enviroment.sh
     ├── data/
-    ├── engineering/
-	├── env/
-	├── models/
-    ├── main.sh
-    ├── requirements.txt
+    ├── docs/
+    ├── references/
+    ├── scripts/
+		├── ml_runs.sh/
+		└── preprocess.sh/
+    ├── src
+		├── data/
+		├── features/
+		├── models/
+			└── run_model.py
+		└── visualizations/
+    ├── .gitignore
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── LICENSE
+    ├── Makefile
     └── README.md
     
     
-This structure ensures a seamless navigation and operation of the pipeline.
+This project uses Docker to manage its environment and dependencies, ensuring consistency across different systems. Follow the steps below to build and run the project using Docker.
 
 ### Prerequisites
-To set up `hk_model`, ensure all prerequisites are met. Refer to our `requirements.txt` for a comprehensive list of necessary dependencies. This file provides all you need to prepare your environment for using `hk_model`.
+- Ensure you have Docker installed on your system.
 
 
-## 3. Usage
-To run this **hk_model** Pipeline, you will need to be in the top level folder and then execute the following command to be run in Unix (Mac):
+## 3. Build the Docker Image
+To run this **hk_model** Pipeline, you will need to be in the top level folder and then build the Docker image, run the following command:
 
 ```bash
-make run_model FILE=fileNameIn MODEL=modelName
+docker build -t diabetia:v1.0 .
+```
+## 4. Running the Docker container
+After building the image, you can start the container using the following command:
+
+```bash
+FILE=hk_sample.csv MODEL=gaussian_e112.pkl docker compose up inference
 ```
 
 #### Parameters Explained
@@ -57,12 +76,6 @@ Understand each parameter for a successful execution:
 | `FILE`    | `<input_file_name>` | Name of the input file located in `data/raw/`. This file should contain new instances for prediction. |
 | `MODEL`   | `<model_name>`   | Name of the pre-trained model for predictions, found in `src/models/`. |
 
-### Examples
-
-To run the pipeline with one sample file:
-```bash
-make run_model FILE=hk_sample.csv MODEL=gaussian_e112.pkl
-```
 
 ## 4. Citation
 For academic referencing, please cite our work as follows:
@@ -84,8 +97,8 @@ The `hk_model` repository is a product of Amphora Health's team:
 
 
 ### Current Release
-- **Version 1.0**  
-  Released on Jan 17, 2024  
+- **Version 1.1.0**  
+  Released on Oct 3, 2024  
   Status: 🟢 Stable Release
 
 
