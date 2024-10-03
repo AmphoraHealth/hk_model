@@ -1,0 +1,12 @@
+services:
+  inference:
+    image: diabetia:v1.0
+    environment:
+      - FILE
+      - MODEL
+    volumes:
+      - ./data/raw:/model/data/raw
+      - ./data/interim:/model/data/interim
+      - ./data/processed:/model/data/processed
+    command: make run_model FILE=${FILE} MODEL=${MODEL}
+    
