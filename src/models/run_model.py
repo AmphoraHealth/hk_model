@@ -63,7 +63,17 @@ if __name__ == '__main__':
                     .rename(columns={'index':'Diagnostic',MODEL:'Cases'})
                     .replace(to_replace={'Diagnostic':{0.0:'Negative',1.0:'Positive'}})
             )
-            data.loc[:,['id',MODEL]+prob_classes].to_csv(f'{ROOT_PATH}/data/processed/{PROJECT}/{OUTPUT.replace(".csv",f"_{MODEL}.csv")}',index=False)
+
+            # Save results
+            file_name = OUTPUT.replace(".csv",f"_{MODEL.replace('.pkl','')}.csv")
+            (
+                data.loc[:,['id',MODEL]+prob_classes]
+                    .to_csv(
+                        f'{ROOT_PATH}/data/processed/{PROJECT}/{file_name}'
+                        ,index=False
+                    )
+            )
+
             logging.info('Prediction done')
             logging.info(f'File saved in: {ROOT_PATH}/data/processed/')
             logging.info(f'Total:\n{"-"*72}\n{results}\n{"-"*72}')
